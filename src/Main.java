@@ -14,10 +14,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Word Reader");
-        System.out.println("(enter 'exit' to quit)");
 
         while (true) {
-            System.out.print("Enter file path: ");
+            System.out.print("Enter file path ('exit' to quit): ");
             String input = scanner.nextLine();
 
             if (input.equals("exit")) {
@@ -48,6 +47,8 @@ public class Main {
                 System.out.println("Book file is empty");
                 continue;
             }
+
+            System.out.println("Book: "+path.getFileName()+"\t Lines: "+bookLines.size());
 
             handleBookMenu(bookLines, scanner);
         }
@@ -84,7 +85,15 @@ public class Main {
         while (true) {
             System.out.println("Book has " + bookLines.size() + " lines");
             System.out.print("Enter line number ('0' to quit): ");
-            int lineIndex = Integer.parseInt(scanner.nextLine());
+
+            int lineIndex;
+            try {
+                lineIndex = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number.");
+                continue;
+            }
+
             if (lineIndex == 0) break;
 
             if (lineIndex < 0 || lineIndex > bookLines.size()) {
@@ -109,7 +118,15 @@ public class Main {
         while (true) {
             System.out.println("Line " + lineIndex + " has " + words.length + " words");
             System.out.print("Enter word index ('0' to quit): ");
-            int wordIndex = Integer.parseInt(scanner.nextLine());
+
+            int wordIndex;
+            try {
+                wordIndex = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number.");
+                continue;
+            }
+
             if (wordIndex == 0) break;
 
             if (wordIndex < 0 || wordIndex > words.length) {
