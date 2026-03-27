@@ -13,7 +13,6 @@ import java.util.zip.ZipInputStream;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Word Reader");
 
         while (true) {
             System.out.print("Enter file path ('exit' to quit): ");
@@ -48,7 +47,7 @@ public class Main {
                 continue;
             }
 
-            System.out.println("Book: "+path.getFileName()+"\t Lines: "+bookLines.size());
+            System.out.println("Book: " + path.getFileName() + "\t Lines: " + bookLines.size());
 
             handleBookMenu(bookLines, scanner);
         }
@@ -94,7 +93,8 @@ public class Main {
                 continue;
             }
 
-            if (lineIndex == 0) break;
+            if (lineIndex == 0)
+                break;
 
             if (lineIndex < 0 || lineIndex > bookLines.size()) {
                 System.out.println(lineIndex + " is not a valid line number");
@@ -127,14 +127,16 @@ public class Main {
                 continue;
             }
 
-            if (wordIndex == 0) break;
+            if (wordIndex == 0)
+                break;
 
             if (wordIndex < 0 || wordIndex > words.length) {
                 System.out.println(wordIndex + " is not a valid word number");
                 continue;
             }
 
-            System.out.println("The word at line " + lineIndex + ", index  " + wordIndex + " is \"" + words[wordIndex - 1] + "\"");
+            System.out.println(
+                    "The word at line " + lineIndex + ", index  " + wordIndex + " is \"" + words[wordIndex - 1] + "\"");
         }
     }
 
@@ -156,7 +158,8 @@ public class Main {
 
             for (int i = 0; i < bookLines.size(); i++) {
                 String lineText = bookLines.get(i).trim();
-                if (lineText.isEmpty()) continue;
+                if (lineText.isEmpty())
+                    continue;
 
                 String[] words = lineText.split("[^a-zA-Z0-9']+");
 
