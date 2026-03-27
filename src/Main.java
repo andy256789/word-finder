@@ -1,9 +1,14 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,7 +34,11 @@ public class Main {
             List<String> bookLines;
 
             try {
-                bookLines = Files.readAllLines(path);
+                if (input.toLowerCase().endsWith(".epub")) {
+                    bookLines = readEpub(path);
+                } else {
+                    bookLines = Files.readAllLines(path);
+                }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 continue;
@@ -144,5 +153,33 @@ public class Main {
             }
             System.out.println("Matches found: " + matchCount);
         }
+    }
+
+    private static List<String> readEpub(Path path) throws IOException {
+        List<String> bookLines = new ArrayList<>();
+
+        try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(path))) {
+            ZipEntry entry;
+
+            while ((entry = zis.getNextEntry()) != null) {
+                String fileName = entry.getName().toLowerCase();
+
+                if (fileName.endsWith(".html") || fileName.endsWith(".xhtml") || fileName.endsWith(".htm")) {
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(zis));
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        String cleanText = line.replaceAll("<[^>]*>", "").trim();
+
+                        if (!cleanText.isEmpty()) {
+                            bookLines.add(cleanText);
+                        }
+                    }
+                }
+                zis.closeEntry();
+            }
+        }
+        return bookLines;
     }
 }
