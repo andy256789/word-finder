@@ -13,8 +13,6 @@ cd word-finder
 
 ## Run the App
 
-From the project root:
-
 ```bash
 javac src/Main.java
 java -cp src Main
@@ -22,4 +20,4 @@ java -cp src Main
 
 ## Notes
 
-- Example files are in the `examples/` folder.
+- Example files to test the app with are in the `examples/` folder.
