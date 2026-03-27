@@ -130,7 +130,6 @@ public class Main {
 
             for (int i = 0; i < bookLines.size(); i++) {
                 String lineText = bookLines.get(i).trim();
-
                 if (lineText.isEmpty()) continue;
 
                 String[] words = lineText.split("[^a-zA-Z0-9']+");
